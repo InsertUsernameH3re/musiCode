@@ -13,12 +13,14 @@ TT_cannotRead = "TT_cannotRead"
 
 
 class Token:
-    def __init__(self, type):
+    def __init__(self, type, pitch):
         self.type = type
+        self.pitch = pitch
 
     def __str__(self):
-        return f"{self.type}"
-    
+        return f"{self.type} {self.pitch}"
+
+
 class Lexer:
     def __init__(self, file):
         self.file = file
@@ -32,35 +34,19 @@ class Lexer:
         filesContents = self.readFile()
         for char in filesContents:
             if char == "=":
-                self.tokens.append(Token(TT_assign))
+                self.tokens.append(Token(TT_assign, 10))
             elif char == ")":
-                self.tokens.append(Token(TT_rightBrac))
+                self.tokens.append(Token(TT_rightBrac, 20))
             elif char == "(":
-                self.tokens.append(Token(TT_leftBrac))
+                self.tokens.append(Token(TT_leftBrac, 30))
             elif char == "+":
-                self.tokens.append(Token(TT_plus))
+                self.tokens.append(Token(TT_plus, -5))
             elif char == "-":
-                self.tokens.append(Token(TT_minus))
+                self.tokens.append(Token(TT_minus, -10))
             elif char == "*":
-                self.tokens.append(Token(TT_times))
+                self.tokens.append(Token(TT_times, -20))
             elif char == "/":
-                self.tokens.append(Token(TT_divide))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
-            elif char == "=":
-                self.tokens.append(Token(TT_assign))
+                self.tokens.append(Token(TT_divide, -15))
             else:
-                self.tokens.append(Token(TT_cannotRead))
+                self.tokens.append(Token(TT_cannotRead, -20))
         return self.tokens
