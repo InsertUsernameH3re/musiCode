@@ -8,6 +8,6 @@ if __name__ == "__main__":
     sinewave.play()
     obj.pop(0)
     for obje in obj:
-        time.sleep(2)
+        time.sleep(1)
         print(obje)
         sinewave.set_pitch(obje.pitch)
