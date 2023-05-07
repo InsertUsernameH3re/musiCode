@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pysinewave = "*"
+pip = "*"
+musicalbeeps = "*"
 
 [dev-packages]
 

@@ -16,12 +16,13 @@ TT_cannotRead = "TT_cannotRead"
 
 
 class Token:
-    def __init__(self, type, pitch):
+    def __init__(self, type, pitch, note):
         self.type = type
         self.pitch = pitch
+        self.note = note
 
     def __str__(self):
-        return f"{self.type} {self.pitch}"
+        return f"{self.type} {self.pitch} {self.note}"
 
 
 class Lexer:
@@ -38,28 +39,28 @@ class Lexer:
         while len(self.filesContents) > 0:
             char = self.filesContents[0]
             if char == "=":
-                self.tokens.append(Token(TT_assign, 10))
+                self.tokens.append(Token(TT_assign, 10, "A"))
                 self.filesContents = self.filesContents[1:]
             elif char == ")":
-                self.tokens.append(Token(TT_rightBrac, 20))
+                self.tokens.append(Token(TT_rightBrac, 20, "B"))
                 self.filesContents = self.filesContents[1:]
             elif char == "(":
-                self.tokens.append(Token(TT_leftBrac, 30))
+                self.tokens.append(Token(TT_leftBrac, 30, "C"))
                 self.filesContents = self.filesContents[1:]
             elif char == "+":
-                self.tokens.append(Token(TT_plus, -5))
+                self.tokens.append(Token(TT_plus, -5, "D"))
                 self.filesContents = self.filesContents[1:]
             elif char == "-":
-                self.tokens.append(Token(TT_minus, -10))
+                self.tokens.append(Token(TT_minus, -10, "E"))
                 self.filesContents = self.filesContents[1:]
             elif char == "*":
-                self.tokens.append(Token(TT_times, -20))
+                self.tokens.append(Token(TT_times, -20, "F"))
                 self.filesContents = self.filesContents[1:]
             elif char == "/":
-                self.tokens.append(Token(TT_divide, -15))
+                self.tokens.append(Token(TT_divide, -15, "G"))
                 self.filesContents = self.filesContents[1:]
             elif char == '"':
-                self.tokens.append(Token(TT_string, 20))
+                self.tokens.append(Token(TT_string, 20, "G5"))
                 self.filesContents = self.filesContents[1:]
                 for char in self.filesContents:
                     if char == '"':
@@ -69,7 +70,7 @@ class Lexer:
                         self.filesContents = self.filesContents[1:]
 
             elif char == "'":
-                self.tokens.append(Token(TT_string, 20))
+                self.tokens.append(Token(TT_string, 20, "A4"))
                 self.filesContents = self.filesContents[1:]
                 for char in self.filesContents:
                     if char == "'":
@@ -88,13 +89,13 @@ class Lexer:
                     elif re.match(r".", char):
                         floate = False
                         self.filesContents = self.filesContents[1:]
-                    else: 
+                    else:
                         break
                 if floate == True:
-                    self.tokens.append(Token(TT_float, 25))
+                    self.tokens.append(Token(TT_float, 25, "C5"))
                 else:
-                    self.tokens.append(Token(TT_integer, 30))
+                    self.tokens.append(Token(TT_integer, 30, "C8"))
             else:
-               self.filesContents = self.filesContents[1:] 
+                self.filesContents = self.filesContents[1:]
 
         return self.tokens
