@@ -13,7 +13,9 @@ TT_output = "TT_output"
 TT_integer = "TT_integer"
 TT_float = "TT_float"
 TT_cannotRead = "TT_cannotRead"
-
+TT_if = "TT_if"
+TT_else = "TT_else"
+TT_elif = "TT_elif"
 
 class Token:
     def __init__(self, type, pitch, note):
@@ -95,6 +97,21 @@ class Lexer:
                     self.tokens.append(Token(TT_float, 25, "C5"))
                 else:
                     self.tokens.append(Token(TT_integer, 30, "C8"))
+            elif char == "i" or char == "e":
+                self.filesContents = self.filesContents[1:]
+                for char in self.filesContents:
+                    if char == "f" and self.filesContents[1] == " ":
+                        self.tokens.append(Token(TT_if, 20, "C2"))
+                        self.filesContents = self.filesContents[2:]
+                        break
+                    elif self.filesContents[1] == "s" and self.filesContents[2] == "e":
+                        self.tokens.append(Token(TT_else, 15, "A2"))
+                        break
+                    elif self.filesContents[1] == "i" and self.filesContents[2] == "f":
+                        self.tokens.append(Token(TT_elif, 10, "C"))
+                        break
+                    else:
+                        break
             else:
                 self.filesContents = self.filesContents[1:]
 
